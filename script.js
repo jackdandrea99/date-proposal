@@ -2,15 +2,24 @@ const noButton = document.getElementById("no-button");
 const yesButton = document.getElementById("yesButton");
 let videoPlayed = false;
 
-// NO scappa subito
-function moveNoButton() {
+// NO scappa se il cursore si avvicina
+function moveNoButton(event) {
+    const buffer = 100; // distanza minima dal cursore
     const maxWidth = window.innerWidth - noButton.offsetWidth;
     const maxHeight = window.innerHeight - noButton.offsetHeight;
-    const randomX = Math.max(0, Math.floor(Math.random() * maxWidth));
-    const randomY = Math.max(0, Math.floor(Math.random() * maxHeight));
+
+    let newX = Math.random() * maxWidth;
+    let newY = Math.random() * maxHeight;
+
+    // Assicurati che sia almeno `buffer` px lontano dal cursore
+    while (Math.abs(newX - event.clientX) < buffer && Math.abs(newY - event.clientY) < buffer) {
+        newX = Math.random() * maxWidth;
+        newY = Math.random() * maxHeight;
+    }
+
     noButton.style.position = "absolute";
-    noButton.style.left = randomX + "px";
-    noButton.style.top = randomY + "px";
+    noButton.style.left = newX + "px";
+    noButton.style.top = newY + "px";
 }
 
 // Funzione showMessage
@@ -78,8 +87,9 @@ function showMessage(response) {
 }
 
 // Event listener
-noButton.addEventListener("mouseover", moveNoButton); // Desktop
+noButton.addEventListener("mousemove", moveNoButton); // fugge quando il mouse si avvicina
 noButton.addEventListener("click", () => showMessage("No"));
 yesButton.addEventListener("click", () => showMessage("Yes"));
+
 
 
