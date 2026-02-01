@@ -1,5 +1,5 @@
 // ==========================
-// Riferimenti ai bottoni e variabili
+// Riferimenti ai bottoni
 // ==========================
 const noButton = document.getElementById("no-button");
 const yesButton = document.getElementById("yesButton");
@@ -19,13 +19,17 @@ function moveNoButton() {
 }
 
 // ==========================
-// Event listener NO (desktop + mobile)
+// NO button: scappa subito al mouseover
 // ==========================
-noButton.addEventListener("pointerover", moveNoButton); // hover desktop
-noButton.addEventListener("pointerdown", () => {       // tap mobile
-    moveNoButton();
-    showMessage("No"); // al tap parte subito la funzione
-});
+noButton.addEventListener("mouseover", moveNoButton);
+
+// Click sul NO (può mostrare messaggio/video)
+noButton.addEventListener("click", () => showMessage("No"));
+
+// ==========================
+// YES button: click normale
+// ==========================
+yesButton.addEventListener("click", () => showMessage("Yes"));
 
 // ==========================
 // Funzione showMessage
@@ -82,4 +86,8 @@ function showMessage(response) {
         // Rimuove bottone YES
         yesButton.remove();
 
-        // Mostra messaggio YES (opzionale)
+        // Mostra messaggio YES
+        document.getElementById("yes-message").style.display = "block";
+    }
+}
+
