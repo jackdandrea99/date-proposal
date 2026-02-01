@@ -1,32 +1,32 @@
 function showMessage(response) {
+    // Nasconde eventuali messaggi precedenti
+    document.getElementById("no-message")?.style.display = "none";
+    document.getElementById("yes-message")?.style.display = "none";
 
     if (response === "No") {
-        document.getElementById("no-message").style.display = "block";
+        document.getElementById("no-message")?.style.display = "block";
     }
 
     if (response === "Yes") {
-
-        // nasconde eventuale messaggio No
-        document.getElementById("no-message").style.display = "none";
-
-        // rimuove elementi iniziali
+        // Rimuove elementi iniziali
         noButton.remove();
         yesButton.remove();
         document.getElementById("name")?.remove();
         document.querySelector(".image")?.remove();
 
-        // aggiorna testo
+        // Aggiorna testo della domanda
         const question = document.getElementById("question");
         question.textContent = "Ottima scelta 😝";
 
-        document.getElementById("yes-message").style.display = "block";
+        // Mostra messaggio Yes
+        document.getElementById("yes-message")?.style.display = "block";
 
-        // audio (file locale)
+        // Riproduci audio
         const audio = document.createElement("audio");
-        audio.src = "minions-cheering.mp4"; // <-- percorso corretto
+        audio.src = "minions-cheering.mp4"; 
         audio.play().catch(() => {});
 
-        // GIF Tenor
+        // Aggiungi GIF Tenor
         const gifWrapper = document.createElement("div");
         gifWrapper.innerHTML = `
         <div class="tenor-gif-embed"
@@ -34,15 +34,11 @@ function showMessage(response) {
              data-share-method="host"
              data-aspect-ratio="1.16279"
              data-width="100%">
-        </div>
-    `;
+        </div>`;
+        document.querySelector(".Mainprompt")?.appendChild(gifWrapper);
 
-        document.querySelector(".Mainprompt").appendChild(gifWrapper);
-
-        // forza Tenor a renderizzare
-        if (window.Tenor && window.Tenor.init) {
-            window.Tenor.init();
-        }
+        // Inizializza Tenor
+        if (window.Tenor?.init) window.Tenor.init();
     }
 }
 
