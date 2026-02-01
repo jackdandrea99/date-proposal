@@ -2,9 +2,9 @@ const noButton = document.getElementById("no-button");
 const yesButton = document.getElementById("yesButton");
 let videoPlayed = false;
 
-// NO fugge in modo rapido ma raggiungibile
+// NO fugge entro una zona vicina
 function moveNoButton(event) {
-    const step = 80; // spostamento massimo
+    const step = 200; // massimo salto (più grande per essere sfuggente)
     const maxWidth = window.innerWidth - noButton.offsetWidth;
     const maxHeight = window.innerHeight - noButton.offsetHeight;
 
@@ -12,21 +12,9 @@ function moveNoButton(event) {
     let currentX = noButton.offsetLeft;
     let currentY = noButton.offsetTop;
 
-    // Spostamento casuale
-    let moveX = (Math.random() * step * 2 - step); // -step → +step
-    let moveY = (Math.random() * step * 2 - step);
-
-    // Se il mouse è vicino, aumenta lo spostamento per renderlo più sfuggente
-    if (event) {
-        const rect = noButton.getBoundingClientRect();
-        const mouseX = event.clientX;
-        const mouseY = event.clientY;
-        const distance = Math.hypot(rect.left - mouseX, rect.top - mouseY);
-        if (distance < 120) { // distanza soglia
-            moveX *= 1.5;
-            moveY *= 1.5;
-        }
-    }
+    // Nuova posizione casuale entro il raggio 'step'
+    let moveX = (Math.random() * 2 - 1) * step; // -step → +step
+    let moveY = (Math.random() * 2 - 1) * step;
 
     let newX = currentX + moveX;
     let newY = currentY + moveY;
@@ -106,6 +94,7 @@ function showMessage(response) {
 noButton.addEventListener("mousemove", moveNoButton); // fugge se il mouse si avvicina
 noButton.addEventListener("click", () => showMessage("No"));
 yesButton.addEventListener("click", () => showMessage("Yes"));
+
 
 
 
