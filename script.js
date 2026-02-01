@@ -46,7 +46,7 @@ function showMessage(response) {
 
         // audio (file locale)
         const audio = document.createElement("audio");
-        audio.src = "audio/minions-cheering.mp3"; // <-- percorso corretto
+        audio.src = "minions-cheering.mp4"; // <-- percorso corretto
         audio.play().catch(() => {});
 
         // GIF Tenor
