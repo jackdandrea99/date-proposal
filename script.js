@@ -23,19 +23,7 @@ function moveNoButton() {
     noButton.style.top = newY + "px";
 }
 
-// Funzione per mostrare i messaggi
 function showMessage(response) {
-    // Nascondi tutti i messaggi prima
-    const noMessage = document.getElementById("no-message");
-    if (noMessage) noMessage.style.display = "none";
-
-    const yesMessage = document.getElementById("yes-message");
-    if (yesMessage) yesMessage.style.display = "none";
-
-    if (response === "No") {
-        if (noMessage) noMessage.style.display = "block";
-    }
-
     if (response === "Yes") {
         // Rimuove elementi iniziali
         noButton.remove();
@@ -47,14 +35,15 @@ function showMessage(response) {
 
         // Aggiorna testo della domanda
         const question = document.getElementById("question");
-        if (question) question.textContent = "Ottima scelta 😝";
+        if (question) question.textContent = "Ottima scelta 😎";
 
         // Mostra messaggio Yes
+        const yesMessage = document.getElementById("yes-message");
         if (yesMessage) yesMessage.style.display = "block";
 
         // Riproduci audio
         const audio = document.createElement("audio");
-        audio.src = "minions-cheering.mp4"; // percorso corretto del file locale
+        audio.src = "minions-cheering.mp4"; 
         audio.play().catch(() => {});
 
         // Aggiungi GIF Tenor
