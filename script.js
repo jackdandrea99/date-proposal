@@ -2,23 +2,19 @@ const noButton = document.getElementById("no-button");
 const yesButton = document.getElementById("yesButton");
 let videoPlayed = false;
 
-// NO scappa vicino al cursore, ma rimane sullo schermo
-function moveNoButton(event) {
-    const step = 80; // distanza massima dello spostamento
+// NO fugge solo di pochi pixel per volta
+function moveNoButton() {
+    const step = 30; // massimo numero di pixel per spostarsi
     const maxWidth = window.innerWidth - noButton.offsetWidth;
     const maxHeight = window.innerHeight - noButton.offsetHeight;
 
+    // Posizione attuale
     let currentX = noButton.offsetLeft;
     let currentY = noButton.offsetTop;
 
-    // Calcola la direzione opposta al cursore
-    let dx = currentX - event.clientX;
-    let dy = currentY - event.clientY;
-
-    // Normalizza e scala lo spostamento
-    let distance = Math.sqrt(dx*dx + dy*dy) || 1; // evita divisione per 0
-    let moveX = (dx / distance) * (20 + Math.random() * step);
-    let moveY = (dy / distance) * (20 + Math.random() * step);
+    // Scegli un piccolo spostamento casuale (-step, +step)
+    let moveX = (Math.random() * 2 - 1) * step;
+    let moveY = (Math.random() * 2 - 1) * step;
 
     let newX = currentX + moveX;
     let newY = currentY + moveY;
@@ -32,7 +28,7 @@ function moveNoButton(event) {
     noButton.style.top = newY + "px";
 }
 
-// Funzione showMessage (rimane uguale)
+// Funzione showMessage
 function showMessage(response) {
     if (response === "No") {
         document.getElementsByClassName("image")[0].src = "https://media.giphy.com/media/l0ExncehJzexFpRHq/giphy.gif";
@@ -95,7 +91,7 @@ function showMessage(response) {
 }
 
 // Event listener
-noButton.addEventListener("mousemove", moveNoButton); // fugge quando il mouse si avvicina
+noButton.addEventListener("mouseover", moveNoButton); // fugge di pochi pixel
 noButton.addEventListener("click", () => showMessage("No"));
 yesButton.addEventListener("click", () => showMessage("Yes"));
 
