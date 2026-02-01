@@ -8,19 +8,17 @@ const maxHeight = window.innerHeight - noButton.offsetHeight;
 
 let videoPlayed = false;
 
-// Funzione per far muovere NO
+// Movimento NO anche su mobile
 function moveNoButton() {
-    const randomX = Math.max(0, Math.floor(Math.random() * maxWidth));
-    const randomY = Math.max(0, Math.floor(Math.random() * maxHeight));
+    const randomX = Math.max(0, Math.floor(Math.random() * (window.innerWidth - noButton.offsetWidth)));
+    const randomY = Math.max(0, Math.floor(Math.random() * (window.innerHeight - noButton.offsetHeight)));
     noButton.style.position = "absolute";
     noButton.style.left = randomX + "px";
     noButton.style.top = randomY + "px";
 }
 
-// Event listener NO
-noButton.addEventListener("mouseover", () => {
-    moveNoButton();
-});
+noButton.addEventListener("mouseover", moveNoButton); // Desktop
+noButton.addEventListener("touchstart", moveNoButton); // Mobile
 
 // ==========================
 // Funzione showMessage
