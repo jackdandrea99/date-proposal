@@ -47,7 +47,7 @@ function showMessage() {
 
     // MOSTRA GIF LOCALE
     const gifImage = document.createElement("img");
-    gifImage.src = "snl-marcelo.gif"; // qui il tuo file locale
+    gifImage.src = "snl-marcello.gif"; // qui il tuo file locale
     gifImage.alt = "GIF celebrativa";
     gifImage.style.width = "100%"; // adatta la dimensione
     gifImage.style.maxHeight = "300px"; // altezza massima
