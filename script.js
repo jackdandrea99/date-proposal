@@ -2,9 +2,9 @@ const noButton = document.getElementById("no-button");
 const yesButton = document.getElementById("yesButton");
 let videoPlayed = false;
 
-// NO fugge solo di pochi pixel per volta
-function moveNoButton() {
-    const step = 30; // massimo numero di pixel per spostarsi
+// NO fugge in modo rapido ma raggiungibile
+function moveNoButton(event) {
+    const step = 80; // spostamento massimo
     const maxWidth = window.innerWidth - noButton.offsetWidth;
     const maxHeight = window.innerHeight - noButton.offsetHeight;
 
@@ -12,9 +12,21 @@ function moveNoButton() {
     let currentX = noButton.offsetLeft;
     let currentY = noButton.offsetTop;
 
-    // Scegli un piccolo spostamento casuale (-step, +step)
-    let moveX = (Math.random() * 2 - 1) * step;
-    let moveY = (Math.random() * 2 - 1) * step;
+    // Spostamento casuale
+    let moveX = (Math.random() * step * 2 - step); // -step → +step
+    let moveY = (Math.random() * step * 2 - step);
+
+    // Se il mouse è vicino, aumenta lo spostamento per renderlo più sfuggente
+    if (event) {
+        const rect = noButton.getBoundingClientRect();
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+        const distance = Math.hypot(rect.left - mouseX, rect.top - mouseY);
+        if (distance < 120) { // distanza soglia
+            moveX *= 1.5;
+            moveY *= 1.5;
+        }
+    }
 
     let newX = currentX + moveX;
     let newY = currentY + moveY;
@@ -28,7 +40,7 @@ function moveNoButton() {
     noButton.style.top = newY + "px";
 }
 
-// Funzione showMessage
+// Funzione per mostrare i messaggi
 function showMessage(response) {
     if (response === "No") {
         document.getElementsByClassName("image")[0].src = "https://media.giphy.com/media/l0ExncehJzexFpRHq/giphy.gif";
@@ -91,7 +103,7 @@ function showMessage(response) {
 }
 
 // Event listener
-noButton.addEventListener("mouseover", moveNoButton); // fugge di pochi pixel
+noButton.addEventListener("mousemove", moveNoButton); // fugge se il mouse si avvicina
 noButton.addEventListener("click", () => showMessage("No"));
 yesButton.addEventListener("click", () => showMessage("Yes"));
 
