@@ -1,84 +1,93 @@
-function showMessage(response) {
-  let videoPlayed = false;
-  if (response === "No") {
-    const noButton = document.getElementById("no-button");
-    const maxWidth = window.innerWidth - noButton.offsetWidth;
-    const maxHeight = window.innerHeight - noButton.offsetHeight;
+// ==========================
+// NO che scappa al passaggio del mouse
+// ==========================
+const noButton = document.getElementById("no-button");
+const yesButton = document.getElementById("yesButton");
+const maxWidth = window.innerWidth - noButton.offsetWidth;
+const maxHeight = window.innerHeight - noButton.offsetHeight;
 
-    // Set the button position to absolute
-    noButton.style.position = "absolute";
+let videoPlayed = false;
 
-    // Change the image source to "gun.gif"
-    document.getElementsByClassName("image")[0].src = "images/gun.gif";
-
-    // Generate random coordinates within the visible container
+// Funzione per far muovere NO
+function moveNoButton() {
     const randomX = Math.max(0, Math.floor(Math.random() * maxWidth));
     const randomY = Math.max(0, Math.floor(Math.random() * maxHeight));
-
-    // Apply the new coordinates to the button
+    noButton.style.position = "absolute";
     noButton.style.left = randomX + "px";
     noButton.style.top = randomY + "px";
+}
 
-    // Update text content and hide the name message
-    document.getElementById("question").textContent =
-      "Choose wisely";
-    document.getElementById("name").style.display = "none";
+// Event listener NO
+noButton.addEventListener("mouseover", () => {
+    moveNoButton();
+});
 
-    // Add a mouseover event listener to the "No" button
-    noButton.addEventListener("mouseover", () => {
-      if (!videoPlayed) {
-        const videoElement = document.createElement("video");
-        videoElement.src = "./Maroon 5 - Sugar.mp4#t=42";
-        videoElement.autoplay = true;
-        videoElement.controls = false;
-        document.body.appendChild(videoElement);
-        videoElement.style.position = "fixed";
-        videoElement.style.top = "40%";
-        videoElement.style.left = "50%";
-        videoElement.style.transform = "translate(-50%, -50%)";
-        videoElement.style.width = "700px"
-        document.body.appendChild(videoElement);
-        // Set the flag to true after playing the video
-        videoPlayed = true;
-      }
+// ==========================
+// Funzione showMessage
+// ==========================
+function showMessage(response) {
 
-      // Generate new random coordinates when the button is hovered
-      const randomX = Math.max(0, Math.floor(Math.random() * maxWidth));
-      const randomY = Math.max(0, Math.floor(Math.random() * maxHeight));
+    if (response === "No") {
+        // Cambia immagine
+        document.getElementsByClassName("image")[0].src = "images/gun.gif";
+        document.getElementById("question").textContent = "Choose wisely";
+        document.getElementById("name").style.display = "none";
 
-      noButton.style.zIndex = "100";
-      // Apply new coordinates to the button, causing it to move
-      noButton.style.left = randomX + "px";
-      noButton.style.top = randomY + "px";
-    });
-  }
+        // Video Maroon 5 (una sola volta)
+        if (!videoPlayed) {
+            const videoElement = document.createElement("video");
+            videoElement.src = "./Maroon 5 - Sugar.mp4#t=42";
+            videoElement.autoplay = true;
+            videoElement.controls = false;
+            videoElement.style.position = "fixed";
+            videoElement.style.top = "40%";
+            videoElement.style.left = "50%";
+            videoElement.style.transform = "translate(-50%, -50%)";
+            videoElement.style.width = "700px";
+            document.body.appendChild(videoElement);
+            videoPlayed = true;
+        }
 
-  if (response === "Yes") {
-    // Remove the name message and the "No" button
-    document.getElementById("name").remove();
-    document.getElementById("no-button").remove();
-    const videoElement = document.querySelector("video");
-    if (videoElement) {
-      videoElement.pause();
-      videoElement.remove();
+        // Mostra messaggio NO
+        document.getElementById("no-message").style.display = "block";
     }
 
-    // Create an audio element to play the sound
-    const audioElement = document.createElement("audio");
-    audioElement.src = "./Minions Cheering.mp3"; // Source of the sound
-    audioElement.preload = "auto"; // Preloading the audio
-    audioElement.play() // Play the sound
-      .catch(e => console.error("Audio playback failed:", e)); // Catch and log playback errors
+    if (response === "Yes") {
+        // Rimuove name e NO
+        document.getElementById("name").remove();
+        noButton.remove();
 
-    // Update the text content, display the message, and change the image to "dance.gif"
-    const yesMessage = document.getElementById("question");
-    yesMessage.textContent = "See you on the 14th my princess";
-    yesMessage.style.display = "block";
-    yesMessage.style.fontStyle = "normal";
-    document.getElementsByClassName("image")[0].src = "images/dance.gif";
+        // Rimuove eventuale video
+        const videoElement = document.querySelector("video");
+        if (videoElement) {
+            videoElement.pause();
+            videoElement.remove();
+        }
 
-    // Remove the "Yes" button
-    document.getElementById("yesButton").remove();
+        // Suono YES
+        const audioElement = document.createElement("audio");
+        audioElement.src = "./Minions Cheering.mp3";
+        audioElement.preload = "auto";
+        audioElement.play().catch(e => console.error("Audio playback failed:", e));
+
+        // Cambia testo e immagine
+        const yesMessage = document.getElementById("question");
+        yesMessage.textContent = "Ottima scelta 😌 allora ci sentiamo e organizziamo 😉";
+        document.getElementsByClassName("image")[0].src = "images/dance.gif";
+
+        // Rimuove bottone YES
+        yesButton.remove();
+
+        // Mostra messaggio YES (opzionale)
+        document.getElementById("yes-message").style.display = "block";
+    }
+}
+
+// ==========================
+// Event listener per click sui bottoni
+// ==========================
+noButton.addEventListener("click", () => showMessage("No"));
+yesButton.addEventListener("click", () => showMessage("Yes"));
   }
 
 }
