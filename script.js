@@ -52,13 +52,20 @@ function showMessage(response) {
         // GIF Tenor
         const gifWrapper = document.createElement("div");
         gifWrapper.innerHTML = `
-            <div class="tenor-gif-embed"
-                 data-postid="22166163990103218"
-                 data-share-method="host"
-                 data-aspect-ratio="1.16279"
-                 data-width="100%">
-            </div>
-        `;
+        <div class="tenor-gif-embed"
+             data-postid="22166163990103218"
+             data-share-method="host"
+             data-aspect-ratio="1.16279"
+             data-width="100%">
+        </div>
+    `;
+
+    document.querySelector(".Mainprompt").appendChild(gifWrapper);
+
+    // forza Tenor a renderizzare (utile se il div viene aggiunto dopo)
+    if (window.Tenor && window.Tenor.init) {
+    window.Tenor.init();
+    }
 
         document.querySelector(".Mainprompt")
             .appendChild(gifWrapper);
