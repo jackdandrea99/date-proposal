@@ -2,9 +2,7 @@ const noButton = document.getElementById("no-button");
 const yesButton = document.getElementById("yesButton");
 let videoPlayed = false;
 
-// ==========================
-// Funzione per far muovere NO
-// ==========================
+// NO scappa subito
 function moveNoButton() {
     const maxWidth = window.innerWidth - noButton.offsetWidth;
     const maxHeight = window.innerHeight - noButton.offsetHeight;
@@ -15,21 +13,10 @@ function moveNoButton() {
     noButton.style.top = randomY + "px";
 }
 
-// NO scappa subito al mouseover
-noButton.addEventListener("mouseover", moveNoButton);
-
-// Click sul NO
-noButton.addEventListener("click", () => showMessage("No"));
-
-// YES button
-yesButton.addEventListener("click", () => showMessage("Yes"));
-
-// ==========================
 // Funzione showMessage
-// ==========================
 function showMessage(response) {
     if (response === "No") {
-        document.getElementsByClassName("image")[0].src = "images/gun.gif";
+        document.getElementsByClassName("image")[0].src = "https://media.giphy.com/media/l0ExncehJzexFpRHq/giphy.gif"; // gun GIF
         document.getElementById("question").textContent = "Choose wisely";
         document.getElementById("name").style.display = "none";
 
@@ -68,9 +55,8 @@ function showMessage(response) {
         const yesMessage = document.getElementById("question");
         yesMessage.textContent = "Ottima scelta 😌 allora ci sentiamo e organizziamo 😉";
 
-        // Rimuove la GIF precedente
-        const imageContainer = document.getElementsByClassName("image")[0];
-        imageContainer.remove();
+        // Rimuove GIF precedente
+        document.getElementsByClassName("image")[0].remove();
 
         // Inserisce GIF Tenor
         const tenorEmbed = document.createElement("div");
@@ -90,5 +76,10 @@ function showMessage(response) {
         document.getElementById("yes-message").style.display = "block";
     }
 }
+
+// Event listener
+noButton.addEventListener("mouseover", moveNoButton); // Desktop
+noButton.addEventListener("click", () => showMessage("No"));
+yesButton.addEventListener("click", () => showMessage("Yes"));
 
 
