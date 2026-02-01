@@ -1,28 +1,3 @@
-const noButton = document.getElementById("no-button");
-const yesButton = document.getElementById("yesButton");
-
-// Bottone NO che scappa
-function moveNoButton() {
-    const step = 180;
-
-    const maxWidth = window.innerWidth - noButton.offsetWidth;
-    const maxHeight = window.innerHeight - noButton.offsetHeight;
-
-    const currentX = noButton.offsetLeft;
-    const currentY = noButton.offsetTop;
-
-    const moveX = (Math.random() * 2 - 1) * step;
-    const moveY = (Math.random() * 2 - 1) * step;
-
-    const newX = Math.max(0, Math.min(currentX + moveX, maxWidth));
-    const newY = Math.max(0, Math.min(currentY + moveY, maxHeight));
-
-    noButton.style.position = "absolute";
-    noButton.style.left = newX + "px";
-    noButton.style.top = newY + "px";
-}
-
-// Gestione click
 function showMessage(response) {
 
     if (response === "No") {
@@ -30,6 +5,9 @@ function showMessage(response) {
     }
 
     if (response === "Yes") {
+
+        // nasconde eventuale messaggio No
+        document.getElementById("no-message").style.display = "none";
 
         // rimuove elementi iniziali
         noButton.remove();
@@ -39,8 +17,7 @@ function showMessage(response) {
 
         // aggiorna testo
         const question = document.getElementById("question");
-        question.textContent =
-            "Ottima scelta 😝";
+        question.textContent = "Ottima scelta 😝";
 
         document.getElementById("yes-message").style.display = "block";
 
@@ -60,22 +37,14 @@ function showMessage(response) {
         </div>
     `;
 
-    document.querySelector(".Mainprompt").appendChild(gifWrapper);
+        document.querySelector(".Mainprompt").appendChild(gifWrapper);
 
-    // forza Tenor a renderizzare (utile se il div viene aggiunto dopo)
-    if (window.Tenor && window.Tenor.init) {
-    window.Tenor.init();
-    }
-
-        document.querySelector(".Mainprompt")
-            .appendChild(gifWrapper);
+        // forza Tenor a renderizzare
+        if (window.Tenor && window.Tenor.init) {
+            window.Tenor.init();
+        }
     }
 }
-
-// Event listener
-noButton.addEventListener("mousemove", moveNoButton);
-noButton.addEventListener("click", () => showMessage("No"));
-yesButton.addEventListener("click", () => showMessage("Yes"));
 
 
 
