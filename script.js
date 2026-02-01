@@ -1,30 +1,36 @@
 // ==========================
-// NO che scappa al passaggio del mouse
+// Riferimenti ai bottoni e variabili
 // ==========================
 const noButton = document.getElementById("no-button");
 const yesButton = document.getElementById("yesButton");
-const maxWidth = window.innerWidth - noButton.offsetWidth;
-const maxHeight = window.innerHeight - noButton.offsetHeight;
-
 let videoPlayed = false;
 
-// Movimento NO anche su mobile
+// ==========================
+// Funzione per far muovere NO
+// ==========================
 function moveNoButton() {
-    const randomX = Math.max(0, Math.floor(Math.random() * (window.innerWidth - noButton.offsetWidth)));
-    const randomY = Math.max(0, Math.floor(Math.random() * (window.innerHeight - noButton.offsetHeight)));
+    const maxWidth = window.innerWidth - noButton.offsetWidth;
+    const maxHeight = window.innerHeight - noButton.offsetHeight;
+    const randomX = Math.max(0, Math.floor(Math.random() * maxWidth));
+    const randomY = Math.max(0, Math.floor(Math.random() * maxHeight));
     noButton.style.position = "absolute";
     noButton.style.left = randomX + "px";
     noButton.style.top = randomY + "px";
 }
 
-noButton.addEventListener("mouseover", moveNoButton); // Desktop
-noButton.addEventListener("touchstart", moveNoButton); // Mobile
+// ==========================
+// Event listener NO (desktop + mobile)
+// ==========================
+noButton.addEventListener("pointerover", moveNoButton); // hover desktop
+noButton.addEventListener("pointerdown", () => {       // tap mobile
+    moveNoButton();
+    showMessage("No"); // al tap parte subito la funzione
+});
 
 // ==========================
 // Funzione showMessage
 // ==========================
 function showMessage(response) {
-
     if (response === "No") {
         // Cambia immagine
         document.getElementsByClassName("image")[0].src = "images/gun.gif";
@@ -77,15 +83,3 @@ function showMessage(response) {
         yesButton.remove();
 
         // Mostra messaggio YES (opzionale)
-        document.getElementById("yes-message").style.display = "block";
-    }
-}
-
-// ==========================
-// Event listener per click sui bottoni
-// ==========================
-noButton.addEventListener("click", () => showMessage("No"));
-yesButton.addEventListener("click", () => showMessage("Yes"));
-  }
-
-}
