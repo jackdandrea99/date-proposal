@@ -39,8 +39,8 @@ function showMessage(response) {
 
         // aggiorna testo
         const question = document.getElementById("question");
-        question.textContent =
-            "Ottima scelta 😌 allora ci sentiamo e organizziamo 😉";
+        //question.textContent =
+            //"Ottima scelta 😌 allora ci sentiamo e organizziamo 😉";
 
         document.getElementById("yes-message").style.display = "block";
 
