@@ -40,7 +40,7 @@ function showMessage(response) {
         // aggiorna testo
         const question = document.getElementById("question");
         question.textContent =
-            "Allora ci sentiamo e organizziamo 😉";
+            "Non avevo dubbi che avresti fatto la scelta giusta 😝";
 
         document.getElementById("yes-message").style.display = "block";
 
