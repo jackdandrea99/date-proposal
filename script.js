@@ -23,7 +23,6 @@ function moveNoButton() {
     noButton.style.top = newY + "px";
 }
 
-// Funzione per gestire il click su "Sì"
 function showMessage() {
     // Rimuove elementi iniziali
     noButton.remove();
@@ -46,16 +45,18 @@ function showMessage() {
     audio.src = "minions-cheering.mp4"; 
     audio.play().catch(() => {});
 
-    // Aggiungi GIF Tenor tramite iframe
-    const gifWrapper = document.createElement("iframe");
-    gifWrapper.src = "https://tenor.com/view/minions-celebrate-gif-22166163990103218/embed?media=false";
-    gifWrapper.width = "100%";
-    gifWrapper.height = "300";
-    gifWrapper.frameBorder = "0";
-    gifWrapper.scrolling = "no";
+    // MOSTRA GIF LOCALE
+    const gifImage = document.createElement("img");
+    gifImage.src = "snl-marcelo.gif"; // qui il tuo file locale
+    gifImage.alt = "GIF celebrativa";
+    gifImage.style.width = "100%"; // adatta la dimensione
+    gifImage.style.maxHeight = "300px"; // altezza massima
+    gifImage.style.objectFit = "contain";
+    gifImage.style.display = "block";
+    gifImage.style.marginTop = "20px";
 
     const mainPrompt = document.querySelector(".Mainprompt");
-    if (mainPrompt) mainPrompt.appendChild(gifWrapper);
+    if (mainPrompt) mainPrompt.appendChild(gifImage);
 }
 
 // Event listener
