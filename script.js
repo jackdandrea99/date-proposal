@@ -1,21 +1,21 @@
 const noButton = document.getElementById("no-button");
 const yesButton = document.getElementById("yesButton");
 
-// NO che scappa
+// Bottone NO che scappa
 function moveNoButton() {
     const step = 180;
 
     const maxWidth = window.innerWidth - noButton.offsetWidth;
     const maxHeight = window.innerHeight - noButton.offsetHeight;
 
-    let currentX = noButton.offsetLeft;
-    let currentY = noButton.offsetTop;
+    const currentX = noButton.offsetLeft;
+    const currentY = noButton.offsetTop;
 
-    let moveX = (Math.random() * 2 - 1) * step;
-    let moveY = (Math.random() * 2 - 1) * step;
+    const moveX = (Math.random() * 2 - 1) * step;
+    const moveY = (Math.random() * 2 - 1) * step;
 
-    let newX = Math.max(0, Math.min(currentX + moveX, maxWidth));
-    let newY = Math.max(0, Math.min(currentY + moveY, maxHeight));
+    const newX = Math.max(0, Math.min(currentX + moveX, maxWidth));
+    const newY = Math.max(0, Math.min(currentY + moveY, maxHeight));
 
     noButton.style.position = "absolute";
     noButton.style.left = newX + "px";
@@ -30,10 +30,11 @@ function showMessage(response) {
     }
 
     if (response === "Yes") {
+
         // rimuove elementi iniziali
         noButton.remove();
         yesButton.remove();
-        document.getElementById("name").remove();
+        document.getElementById("name")?.remove();
         document.querySelector(".image")?.remove();
 
         // aggiorna testo
@@ -41,10 +42,14 @@ function showMessage(response) {
         question.textContent =
             "Ottima scelta 😌 allora ci sentiamo e organizziamo 😉";
 
-        // mostra messaggio sì
         document.getElementById("yes-message").style.display = "block";
 
-        // inserisce GIF Tenor
+        // audio (file locale)
+        const audio = document.createElement("audio");
+        audio.src = "audio/minions-cheering.mp3"; // <-- percorso corretto
+        audio.play().catch(() => {});
+
+        // GIF Tenor
         const gifWrapper = document.createElement("div");
         gifWrapper.innerHTML = `
             <div class="tenor-gif-embed"
@@ -56,7 +61,7 @@ function showMessage(response) {
         `;
 
         document.querySelector(".Mainprompt")
-            .insertBefore(gifWrapper, question.nextSibling);
+            .appendChild(gifWrapper);
     }
 }
 
@@ -64,6 +69,7 @@ function showMessage(response) {
 noButton.addEventListener("mousemove", moveNoButton);
 noButton.addEventListener("click", () => showMessage("No"));
 yesButton.addEventListener("click", () => showMessage("Yes"));
+
 
 
 
