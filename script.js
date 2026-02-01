@@ -2,30 +2,40 @@ const noButton = document.getElementById("no-button");
 const yesButton = document.getElementById("yesButton");
 let videoPlayed = false;
 
-// NO scappa se il cursore si avvicina
+// NO scappa vicino al cursore, ma rimane sullo schermo
 function moveNoButton(event) {
-    const buffer = 100; // distanza minima dal cursore
+    const step = 80; // distanza massima dello spostamento
     const maxWidth = window.innerWidth - noButton.offsetWidth;
     const maxHeight = window.innerHeight - noButton.offsetHeight;
 
-    let newX = Math.random() * maxWidth;
-    let newY = Math.random() * maxHeight;
+    let currentX = noButton.offsetLeft;
+    let currentY = noButton.offsetTop;
 
-    // Assicurati che sia almeno `buffer` px lontano dal cursore
-    while (Math.abs(newX - event.clientX) < buffer && Math.abs(newY - event.clientY) < buffer) {
-        newX = Math.random() * maxWidth;
-        newY = Math.random() * maxHeight;
-    }
+    // Calcola la direzione opposta al cursore
+    let dx = currentX - event.clientX;
+    let dy = currentY - event.clientY;
+
+    // Normalizza e scala lo spostamento
+    let distance = Math.sqrt(dx*dx + dy*dy) || 1; // evita divisione per 0
+    let moveX = (dx / distance) * (20 + Math.random() * step);
+    let moveY = (dy / distance) * (20 + Math.random() * step);
+
+    let newX = currentX + moveX;
+    let newY = currentY + moveY;
+
+    // Limita dentro lo schermo
+    newX = Math.max(0, Math.min(newX, maxWidth));
+    newY = Math.max(0, Math.min(newY, maxHeight));
 
     noButton.style.position = "absolute";
     noButton.style.left = newX + "px";
     noButton.style.top = newY + "px";
 }
 
-// Funzione showMessage
+// Funzione showMessage (rimane uguale)
 function showMessage(response) {
     if (response === "No") {
-        document.getElementsByClassName("image")[0].src = "https://media.giphy.com/media/l0ExncehJzexFpRHq/giphy.gif"; // gun GIF
+        document.getElementsByClassName("image")[0].src = "https://media.giphy.com/media/l0ExncehJzexFpRHq/giphy.gif";
         document.getElementById("question").textContent = "Choose wisely";
         document.getElementById("name").style.display = "none";
 
@@ -64,10 +74,8 @@ function showMessage(response) {
         const yesMessage = document.getElementById("question");
         yesMessage.textContent = "Ottima scelta 😌 allora ci sentiamo e organizziamo 😉";
 
-        // Rimuove GIF precedente
         document.getElementsByClassName("image")[0].remove();
 
-        // Inserisce GIF Tenor
         const tenorEmbed = document.createElement("div");
         tenorEmbed.className = "tenor-gif-embed";
         tenorEmbed.setAttribute("data-postid", "22166163990103218");
